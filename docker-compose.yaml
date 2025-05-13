@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Mikroserwisy aplikacji
   user_service:
-    build: ./user_service
+    build: ./src/user_service
     ports:
       - "5001:5001"
     environment:
@@ -14,7 +14,7 @@ services:
       - fluentbit
 
   movie_service:
-    build: ./movie_service
+    build: ./src/movie_service
     ports:
       - "5002:5002"
     environment:
@@ -25,7 +25,7 @@ services:
       - fluentbit
 
   booking_service:
-    build: ./booking_service
+    build: ./src/booking_service
     ports:
       - "5003:5003"
     environment:
@@ -38,7 +38,7 @@ services:
       - fluentbit
 
   screening_service:
-    build: ./screening_service
+    build: ./src/screening_service
     ports:
       - "5004:5004"
     environment:
@@ -49,7 +49,7 @@ services:
       - fluentbit
 
   notification_service:
-    build: ./notification_service
+    build: ./src/notification_service
     ports:
       - "5005:5005"
     environment:
@@ -85,7 +85,9 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
       - cinema_network
 
