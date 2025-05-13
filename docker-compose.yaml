@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # Mikroserwisy aplikacji
+  user_service:
+    build: ./user_service
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - cinema_network
+    depends_on:
+      - fluentbit
+
+  movie_service:
+    build: ./movie_service
+    ports:
+      - "5002:5002"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - cinema_network
+    depends_on:
+      - fluentbit
+
+  booking_service:
+    build: ./booking_service
+    ports:
+      - "5003:5003"
+    environment:
+      - FLASK_ENV=development
+      - NOTIFICATION_SERVICE_URL=http://notification_service:5005
+    networks:
+      - cinema_network
+    depends_on:
+      - notification_service
+      - fluentbit
+
+  screening_service:
+    build: ./screening_service
+    ports:
+      - "5004:5004"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - cinema_network
+    depends_on:
+      - fluentbit
+
+  notification_service:
+    build: ./notification_service
+    ports:
+      - "5005:5005"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - cinema_network
+    depends_on:
+      - fluentbit
+
+  # Monitoring i observability
+  fluentbit:
+    image: fluent/fluent-bit:2.2
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    volumes:
+      - ./fluentbit/conf:/fluent-bit/etc
+    networks:
+      - cinema_network
+    depends_on:
+      - loki
+
+  loki:
+    image: grafana/loki:2.9.4
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - cinema_network
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - cinema_network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - cinema_network
+    depends_on:
+      - loki
+      - prometheus
+
+networks:
+  cinema_network:
+    driver: bridge
+
+volumes:
+  grafana-storage:
