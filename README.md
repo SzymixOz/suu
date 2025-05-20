@@ -81,7 +81,7 @@ Nasza architektura mikroserwisowa będzie oparta o następujące komponenty i te
 ## 5. Opis konfiguracji środowiska
 
 ### Struktura katalogów
-\`\`\`
+<pre> 
 ├── docker-compose.yml
 ├── fluentbit/
 │   └── conf/
@@ -92,7 +92,7 @@ Nasza architektura mikroserwisowa będzie oparta o następujące komponenty i te
 ├── movie_service/
 │   └── ...
 ...
-\`\`\`
+</pre>
 
 ### Dostępne porty
 | Usługa                | Adres URL              |
