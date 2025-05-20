@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # Mikroserwisy aplikacji
+  user_service:
+    build: ./user_service
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=development
+
+  movie_service:
+    build: ./movie_service
+    ports:
+      - "5002:5002"
+    environment:
+      - FLASK_ENV=development
+
+  booking_service:
+    build: ./booking_service
+    ports:
+      - "5003:5003"
+    environment:
+      - FLASK_ENV=development
+      - NOTIFICATION_SERVICE_URL=http://notification_service:5005
+
+  screening_service:
+    build: ./screening_service
+    ports:
+      - "5004:5004"
+    environment:
+      - FLASK_ENV=development
+
+  notification_service:
+    build: ./notification_service
+    ports:
+      - "5005:5005"
+    environment:
+      - FLASK_ENV=development
+
+  # Monitoring i observability
+  fluentbit:
+    image: fluent/fluent-bit:latest
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    volumes:
+      - ./fluentbit/conf:/fluent-bit/etc
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
