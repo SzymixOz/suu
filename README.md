@@ -79,6 +79,37 @@ Nasza architektura mikroserwisowa będzie oparta o następujące komponenty i te
 
 
 ## 5. Opis konfiguracji środowiska
+
+### Struktura katalogów
+\`\`\`
+├── docker-compose.yml
+├── fluentbit/
+│   └── conf/
+│       ├── fluent-bit.conf
+│       └── parsers.conf
+├── user_service/
+│   └── user_service.py
+├── movie_service/
+│   └── ...
+...
+\`\`\`
+
+### Dostępne porty
+| Usługa                | Adres URL              |
+|------------------------|------------------------|
+| `user_service`         | http://localhost:5001 |
+| `movie_service`        | http://localhost:5002 |
+| `booking_service`      | http://localhost:5003 |
+| `screening_service`    | http://localhost:5004 |
+| `notification_service` | http://localhost:5005 |
+| `Grafana`              | http://localhost:3000 |
+| `Loki`                 | http://localhost:3100 |
+
+### Logowanie i monitoring
+- **Fluent Bit** monitoruje pliki logów kontenerów i przekazuje je dalej w czasie rzeczywistym z `/var/lib/docker/containers` i przesyła je do Loki
+- **Loki** zbiera logi i udostępnia je Grafanie
+- **Grafana** pozwala filtrować logi na podstawie etykiet (`container_name`, `job=fluentbit`, itp.)
+
 ## 6. Instalacja
 ## 7. Reprodukcja – krok po kroku
 ## 8. Demo
