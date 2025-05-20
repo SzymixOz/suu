@@ -75,6 +75,9 @@ Nasza architektura mikroserwisowa będzie oparta o następujące komponenty i te
 ![Opis obrazka](./cinema_microservices.png)
 
 
+![Opis obrazka](./diagram_fluent-bit.png)
+
+
 ## 5. Opis konfiguracji środowiska
 ## 6. Instalacja
 ## 7. Reprodukcja – krok po kroku
