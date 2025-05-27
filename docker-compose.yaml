@@ -3,40 +3,80 @@ version: '3.8'
 services:
   # Mikroserwisy aplikacji
   user_service:
-    build: ./user_service
+    build: ./src/user_service
     ports:
       - "5001:5001"
     environment:
       - FLASK_ENV=development
+    container_name: user_service
+    depends_on:
+      - fluentbit
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: user_service
 
   movie_service:
-    build: ./movie_service
+    build: ./src/movie_service
     ports:
       - "5002:5002"
     environment:
       - FLASK_ENV=development
+    container_name: movie_service
+    depends_on:
+      - fluentbit
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: movie_service
 
   booking_service:
-    build: ./booking_service
+    build: ./src/booking_service
     ports:
       - "5003:5003"
     environment:
       - FLASK_ENV=development
       - NOTIFICATION_SERVICE_URL=http://notification_service:5005
+    container_name: booking_service
+    depends_on:
+      - fluentbit
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: booking_service
 
   screening_service:
-    build: ./screening_service
+    build: ./src/screening_service
     ports:
       - "5004:5004"
     environment:
       - FLASK_ENV=development
+    container_name: screening_service
+    depends_on:
+      - fluentbit
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: screening_service
 
   notification_service:
-    build: ./notification_service
+    build: ./src/notification_service
     ports:
       - "5005:5005"
     environment:
       - FLASK_ENV=development
+    container_name: notification_service
+    depends_on:
+      - fluentbit
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: notification_service
 
   # Monitoring i observability
   fluentbit:
@@ -46,8 +86,6 @@ services:
       - "24224:24224/udp"
     volumes:
       - ./fluentbit/conf:/fluent-bit/etc
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
 
   loki:
     image: grafana/loki:latest
