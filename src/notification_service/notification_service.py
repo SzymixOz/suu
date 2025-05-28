@@ -4,7 +4,6 @@ app = Flask(__name__)
 
 @app.route('/sendEmail', methods=['POST'])
 def sendEmail():
-    """Wyślij email"""
     data = request.get_json()
     
     if not all(key in data for key in ['to', 'subject', 'message']):
@@ -16,7 +15,6 @@ def sendEmail():
 
 @app.route('/sendSMS', methods=['POST'])
 def sendSMS():
-    """Wyślij SMS"""
     data = request.get_json()
     
     if not all(key in data for key in ['to', 'message']):

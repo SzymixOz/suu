@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Dane w pamięci
 movies = {
     1: {"id": 1, "title": "Inception", "director": "Christopher Nolan", "duration": 148, "genre": "Sci-Fi"},
     2: {"id": 2, "title": "The Shawshank Redemption", "director": "Frank Darabont", "duration": 142, "genre": "Drama"}
@@ -11,12 +10,10 @@ next_movie_id = 3
 
 @app.route('/movies', methods=['GET'])
 def getMovies():
-    """Pobierz listę wszystkich filmów"""
     return jsonify(list(movies.values()))
 
 @app.route('/movies/<int:movie_id>', methods=['GET'])
 def getMovie(movie_id):
-    """Pobierz pojedynczy film"""
     movie = movies.get(movie_id)
     if movie:
         return jsonify(movie)
@@ -24,7 +21,6 @@ def getMovie(movie_id):
 
 @app.route('/movies', methods=['POST'])
 def addMovie():
-    """Dodaj nowy film"""
     global next_movie_id
     data = request.get_json()
     

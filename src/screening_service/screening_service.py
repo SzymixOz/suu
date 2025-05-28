@@ -11,12 +11,10 @@ next_screening_id = 3
 
 @app.route('/screenings', methods=['GET'])
 def getScreenings():
-    """Pobierz listę wszystkich seansów"""
     return jsonify(list(screenings.values()))
 
 @app.route('/screenings', methods=['POST'])
 def createScreening():
-    """Utwórz nowy seans"""
     global next_screening_id
     data = request.get_json()
     

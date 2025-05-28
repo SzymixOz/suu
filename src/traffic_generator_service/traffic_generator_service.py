@@ -7,11 +7,9 @@ from flask import Flask
 
 app = Flask(__name__)
 
-# Konfiguracja loggera
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger(__name__)
 
-# Dane testowe
 USER_NAMES = ["Jan Kowalski", "Anna Nowak", "Piotr Wiśniewski", "Maria Dąbrowska", "Tomasz Lewandowski"]
 USER_EMAILS = [f"user{i}@example.com" for i in range(1, 6)]
 MOVIE_TITLES = ["Inception", "The Shawshank Redemption", "The Godfather", "Pulp Fiction", "The Dark Knight"]
@@ -72,13 +70,10 @@ class TrafficGenerator:
         self.init_resources()
 
     def init_resources(self):
-        """Inicjalizacja podstawowych zasobów przed generowaniem ruchu"""
         try:
-            # Sprawdź dostępność serwisów
             for service in self.services.values():
                 requests.get(service['url'], timeout=2)
             
-            # Utwórz przynajmniej jednego użytkownika i film
             if not self.users:
                 user_data = self.generate_random_user()
                 response = requests.post(f"{self.services['user_service']['url']}/users", json=user_data)
@@ -140,7 +135,6 @@ class TrafficGenerator:
 
             url = f"{self.services[service_name]['url']}{endpoint['path']}"
             
-            # Zamień placeholdery na rzeczywiste ID
             if '{user_id}' in endpoint['path']:
                 if not self.users:
                     return
@@ -180,15 +174,15 @@ class TrafficGenerator:
                         return
                     data = {
                         "to": random.choice(self.users)['email'],
-                        "subject": "Potwierdzenie rezerwacji",
-                        "message": "Dziękujemy za rezerwację!"
+                        "subject": "Booking confirmation",
+                        "message": "Thank you for booking!"
                     }
                 elif 'sendSMS' in endpoint['path']:
                     if not self.users:
                         return
                     data = {
                         "to": random.choice(self.users)['phone'],
-                        "message": "Potwierdzenie rezerwacji"
+                        "message": "Booking confirmation"
                     }
                 
                 response = requests.post(url, json=data, timeout=2)
