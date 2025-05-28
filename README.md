@@ -111,8 +111,43 @@ Nasza architektura mikroserwisowa będzie oparta o następujące komponenty i te
 - **Grafana** pozwala filtrować logi na podstawie etykiet (`container_name`, `job=fluentbit`, itp.)
 
 ## 6. Instalacja
+
+Do poprawnego uruchomienia środowiska wymagane są:
+
+### Wymagania systemowe:
+- Docker (https://www.docker.com/)
+
+- Docker Compose (https://docs.docker.com/compose/)
+
+### Kroki instalacyjne:
+1. Klonowanie repozytorium:
+
+```bash
+git clone https://github.com/SzymixOz/suu.git
+cd suu
+```
+
+2. Przygotowanie dodatkowych dashboardów:
+Umieść pliki .json dashboardów w folderze:
+
+```bash
+./grafana/dashboards/
+```
+
 ## 7. Reprodukcja – krok po kroku
+
+1. Budowa i uruchomienie kontenerów:
+W katalogu głównym projektu uruchom:
+
+```bash
+docker-compose up --build
+```
+
+2. Dostęp do usług zgodnie z portami podanymi w punkcie 5.
+
 ## 8. Demo
+
+
 ### Konfiguracja
 ### Przygotowanie danych
 ### Uruchomienie
