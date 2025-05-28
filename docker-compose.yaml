@@ -77,6 +77,26 @@ services:
       options:
         fluentd-address: localhost:24224
         tag: notification_service
+  traffic_generator:
+    build: ./src/traffic_generator_service
+    container_name: traffic_generator_service
+    depends_on:
+      - user_service
+      - movie_service
+      - booking_service
+      - screening_service
+      - notification_service
+    environment:
+      - USER_SERVICE_URL=http://user_service:5001
+      - MOVIE_SERVICE_URL=http://movie_service:5002
+      - BOOKING_SERVICE_URL=http://booking_service:5003
+      - SCREENING_SERVICE_URL=http://screening_service:5004
+      - NOTIFICATION_SERVICE_URL=http://notification_service:5005
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: traffic_generator
 
   # Monitoring i observability
   fluentbit:
