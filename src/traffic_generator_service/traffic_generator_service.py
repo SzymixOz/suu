@@ -221,7 +221,7 @@ class TrafficGenerator:
             endpoint = random.choice(self.services[service_name]['endpoints'])
             
             self.call_service(service_name, endpoint)
-            time.sleep(random.uniform(1, 3))
+            time.sleep(random.uniform(0.1, 1))
 
 @app.route('/')
 def health_check():
