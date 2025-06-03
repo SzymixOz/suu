@@ -146,7 +146,12 @@ docker-compose up --build
 2. Dostęp do usług zgodnie z portami podanymi w punkcie 5.
 
 ## 8. Demo
-
+![Opis obrazka](./pictures/1.png)
+![Opis obrazka](./pictures/2.png)
+![Opis obrazka](./pictures/3.png)
+![Opis obrazka](./pictures/4.png)
+![Opis obrazka](./pictures/5.png)
+![Opis obrazka](./pictures/6.png)
 
 ### Konfiguracja
 ### Przygotowanie danych
