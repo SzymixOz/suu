@@ -155,5 +155,10 @@ docker-compose up --build
 ## 9. Zastosowanie AI w projekcie
 ## 10. Podsumowanie - wnioski
 ## 11. Źródła/Referencje
+- https://docs.docker.com/
+- https://docs.fluentbit.io/manual
+- https://pomoc.small.pl/Flask/
+- https://medium.com/@svss1995/centralized-logging-in-microservices-using-grafana-stack-and-fluent-bit-a77a650a3ad6
+- https://grafana.com/docs/grafana/latest/
 
 
