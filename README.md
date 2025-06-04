@@ -146,6 +146,12 @@ docker-compose up --build
 2. Dostęp do usług zgodnie z portami podanymi w punkcie 5.
 
 ## 8. Demo
+
+### Konfiguracja, przygotowanie danych i uruchomienie
+Tak jak w punkcie 6 i 7. Dashboardy do Grafany ładowane są z pliku, a ruch generowany jest automatycznie przez jeden z mikroserwisów. Do grafany można się zalogować wpisując login i hasło `admin`, a następnie klikając w przycisk 'skip'.
+
+### Prezentacja wyników
+
 ![Opis obrazka](./pictures/1.png)
 ![Opis obrazka](./pictures/2.png)
 ![Opis obrazka](./pictures/3.png)
@@ -153,12 +159,30 @@ docker-compose up --build
 ![Opis obrazka](./pictures/5.png)
 ![Opis obrazka](./pictures/6.png)
 
-### Konfiguracja
-### Przygotowanie danych
-### Uruchomienie
-### Prezentacja wyników
 ## 9. Zastosowanie AI w projekcie
+
+W projekcie wykorzystywaliśmy modele językowe do szybszego wyszukiwania informacji oraz wyszukiwania ewentualnych błędów w plikach konfiguracyjnych.
+
 ## 10. Podsumowanie - wnioski
+
+Kluczowym celem naszego projektu było zaprojektowanie i wdrożenie wydajnego systemu monitoringu i logowania przy pomocy Fluent Bit.
+
+Na podstawie doświadczeń z implementacją wyciągnęliśmy następujące wnioski:
+
+1. Fluent Bit jest lekki, szybki i niezwykle efektywny jako narzędzie do zbierania i przetwarzania logów w środowisku opartym na kontenerach Docker. Jego niskie zużycie zasobów sprawdziło się szczególnie dobrze w naszym wieloserwisowym środowisku.
+
+2. Konfiguracja Fluent Bit okazała się elastyczna, ale wymagała dokładnego zrozumienia plików konfiguracyjnych
+
+3. Integracja z Loki przebiegła sprawnie, dzięki natywnemu wsparciu Fluent Bit dla tego backendu. Wysyłane logi były wzbogacane o dodatkowe metadane (etykiety), co umożliwiło ich dokładną analizę i filtrowanie w Grafanie.
+
+4. Dzięki zastosowaniu centralnego systemu logowania z Fluent Bitem:
+    - Udało się uniknąć ręcznego przeglądania logów w poszczególnych kontenerach.
+    - Możliwe było tworzenie dashboardów i alertów w Grafanie bez potrzeby modyfikowania każdego mikroserwisu osobno.
+
+5. Największym wyzwaniem okazało się skonfiguraowanie przesyłania logów między mikroserwisami a Loki/FluentBit.
+
+Podsumowując, Fluent Bit spełnił swoją rolę jako lekki i potężny agent logujący, a jego zastosowanie znacznie zwiększyło możliwości kontrolne i diagnostyczne naszego systemu.
+
 ## 11. Źródła/Referencje
 - https://docs.docker.com/
 - https://docs.fluentbit.io/manual
